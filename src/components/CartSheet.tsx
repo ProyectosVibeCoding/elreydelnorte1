@@ -1,11 +1,13 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { ShoppingCart, Minus, Plus, Trash2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export function CartSheet() {
   const { items, totalItems, totalPrice, updateQuantity, removeFromCart } = useCart();
+  const navigate = useNavigate();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("es-AR", {
@@ -120,9 +122,14 @@ export function CartSheet() {
                   </span>
                 </div>
                 
-                <Button className="w-full py-6 bg-primary text-primary-foreground font-sans font-medium tracking-wide rounded-sm">
-                  Proceder al pago
-                </Button>
+                <SheetClose asChild>
+                  <Button 
+                    onClick={() => navigate("/checkout")}
+                    className="w-full py-6 bg-primary text-primary-foreground font-sans font-medium tracking-wide rounded-sm"
+                  >
+                    Proceder al pago
+                  </Button>
+                </SheetClose>
                 
                 <p className="text-center text-xs text-muted-foreground mt-3">
                   Envío gratuito en pedidos superiores a $500.000
