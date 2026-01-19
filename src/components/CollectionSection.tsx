@@ -1,36 +1,6 @@
 import { motion } from "framer-motion";
 import { ProductCard } from "./ProductCard";
-import diningTableImg from "@/assets/product-dining-table.jpg";
-import bookshelfImg from "@/assets/product-bookshelf.jpg";
-import chairImg from "@/assets/product-chair.jpg";
-import nightstandImg from "@/assets/product-nightstand.jpg";
-
-const products = [
-  {
-    image: diningTableImg,
-    title: "Mesa Roble Imperial",
-    category: "Mesas de comedor",
-    price: "2.450 €",
-  },
-  {
-    image: bookshelfImg,
-    title: "Librería Nórdica",
-    category: "Estanterías",
-    price: "1.890 €",
-  },
-  {
-    image: chairImg,
-    title: "Silla Copenhagen",
-    category: "Sillas",
-    price: "485 €",
-  },
-  {
-    image: nightstandImg,
-    title: "Mesita Cerezo",
-    category: "Dormitorio",
-    price: "695 €",
-  },
-];
+import { products } from "@/data/products";
 
 export function CollectionSection() {
   return (
@@ -58,8 +28,13 @@ export function CollectionSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product, index) => (
             <ProductCard
-              key={product.title}
-              {...product}
+              key={product.id}
+              id={product.id}
+              image={product.image}
+              title={product.title}
+              category={product.category}
+              price={product.priceFormatted}
+              stock={product.stock}
               delay={index * 0.1}
             />
           ))}
