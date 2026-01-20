@@ -5,12 +5,12 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visítanos",
-    content: "Calle del Artesano 42, 28012 Madrid",
+    content: "Av. Hipólito Yrigoyen 456, X5000 Córdoba, Argentina",
   },
   {
     icon: Phone,
     title: "Llámanos",
-    content: "+34 912 345 678",
+    content: "+54 351 456 7890",
   },
   {
     icon: Mail,
