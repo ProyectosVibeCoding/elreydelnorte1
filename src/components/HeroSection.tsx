@@ -39,10 +39,17 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground max-w-4xl leading-tight"
         >
-          El arte de la madera
-          <br />
-          <span className="text-gradient-gold">hecho a mano</span>
+          El Rey del Norte
         </motion.h1>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="font-serif text-2xl md:text-3xl lg:text-4xl text-gradient-gold mt-2"
+        >
+          Mueblería
+        </motion.h2>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
