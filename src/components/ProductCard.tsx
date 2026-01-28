@@ -7,12 +7,10 @@ interface ProductCardProps {
   image: string;
   title: string;
   category: string;
-  price: string;
-  stock: number;
   delay?: number;
 }
 
-export function ProductCard({ id, image, title, category, price, stock, delay = 0 }: ProductCardProps) {
+export function ProductCard({ id, image, title, category, delay = 0 }: ProductCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -37,13 +35,6 @@ export function ProductCard({ id, image, title, category, price, stock, delay = 
           />
         </div>
         
-        {/* Stock badge */}
-        {stock <= 3 && stock > 0 && (
-          <div className="absolute top-3 left-3 px-3 py-1 bg-amber-500 text-white text-xs font-sans font-medium rounded-full">
-            {stock === 1 ? "¡Última unidad!" : `Solo ${stock}`}
-          </div>
-        )}
-        
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-espresso/0 group-hover:bg-espresso/40 transition-all duration-500 flex items-center justify-center">
           <motion.div
@@ -65,9 +56,6 @@ export function ProductCard({ id, image, title, category, price, stock, delay = 
         <h3 className="font-serif text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
           {title}
         </h3>
-        <p className="font-sans text-lg font-medium text-accent">
-          {price}
-        </p>
       </div>
     </motion.div>
   );
