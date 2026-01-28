@@ -1,9 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Minus, Plus, ShoppingCart, Check, Package } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, Check, Phone, MessageCircle } from "lucide-react";
 import { getProductById } from "@/data/products";
-import { useCart } from "@/context/CartContext";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -11,8 +9,6 @@ import { Button } from "@/components/ui/button";
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
-  const [quantity, setQuantity] = useState(1);
 
   const product = getProductById(id || "");
 
@@ -29,17 +25,6 @@ export default function ProductDetail() {
       </div>
     );
   }
-
-  const handleQuantityChange = (delta: number) => {
-    const newQuantity = quantity + delta;
-    if (newQuantity >= 1 && newQuantity <= product.stock) {
-      setQuantity(newQuantity);
-    }
-  };
-
-  const handleAddToCart = () => {
-    addToCart(product, quantity);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -89,27 +74,10 @@ export default function ProductDetail() {
               <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mt-2">
                 {product.title}
               </h1>
-              
-              <p className="font-serif text-3xl font-semibold text-accent mt-4">
-                {product.priceFormatted}
-              </p>
 
-              <p className="font-sans text-muted-foreground mt-6 leading-relaxed">
+              <p className="font-sans text-muted-foreground mt-6 leading-relaxed text-lg">
                 {product.description}
               </p>
-
-              {/* Stock indicator */}
-              <div className="flex items-center gap-2 mt-6">
-                <Package size={18} className={product.stock > 5 ? "text-green-600" : "text-amber-600"} />
-                <span className={`font-sans text-sm ${product.stock > 5 ? "text-green-600" : "text-amber-600"}`}>
-                  {product.stock > 5 
-                    ? `${product.stock} unidades en stock`
-                    : product.stock === 1
-                      ? "¡Última unidad!"
-                      : `Solo ${product.stock} unidades disponibles`
-                  }
-                </span>
-              </div>
 
               {/* Materials */}
               <div className="mt-8">
@@ -136,46 +104,45 @@ export default function ProductDetail() {
                 <p className="font-sans text-foreground">{product.dimensions}</p>
               </div>
 
-              {/* Quantity selector */}
-              <div className="mt-8 flex items-center gap-4">
-                <span className="font-sans text-sm text-muted-foreground">Cantidad:</span>
-                <div className="flex items-center border border-primary/20 rounded-sm">
-                  <button
-                    onClick={() => handleQuantityChange(-1)}
-                    disabled={quantity <= 1}
-                    className="p-3 hover:bg-secondary transition-colors disabled:opacity-50"
+              {/* Contact buttons */}
+              <div className="mt-10 space-y-4">
+                <p className="font-sans text-muted-foreground text-sm">
+                  ¿Te interesa este producto? Contáctanos para más información y cotización.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <motion.a
+                    href="#contacto"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate("/#contacto");
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex-1 py-4 bg-primary text-primary-foreground font-sans font-medium tracking-wide rounded-sm flex items-center justify-center gap-3 hover:bg-primary/90 transition-colors"
                   >
-                    <Minus size={16} />
-                  </button>
-                  <span className="w-12 text-center font-sans font-medium">{quantity}</span>
-                  <button
-                    onClick={() => handleQuantityChange(1)}
-                    disabled={quantity >= product.stock}
-                    className="p-3 hover:bg-secondary transition-colors disabled:opacity-50"
+                    <MessageCircle size={20} />
+                    Consultar
+                  </motion.a>
+                  
+                  <motion.a
+                    href="tel:+5491234567890"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex-1 py-4 border-2 border-primary text-primary font-sans font-medium tracking-wide rounded-sm flex items-center justify-center gap-3 hover:bg-primary hover:text-primary-foreground transition-colors"
                   >
-                    <Plus size={16} />
-                  </button>
+                    <Phone size={20} />
+                    Llamar
+                  </motion.a>
                 </div>
               </div>
-
-              {/* Add to cart button */}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleAddToCart}
-                disabled={product.stock === 0}
-                className="mt-8 w-full py-4 bg-primary text-primary-foreground font-sans font-medium tracking-wide rounded-sm flex items-center justify-center gap-3 hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <ShoppingCart size={20} />
-                Añadir al carrito
-              </motion.button>
 
               {/* Features */}
               <div className="mt-8 space-y-3">
                 {[
-                  "Envío gratuito a todo el país",
-                  "Garantía de 5 años",
-                  "Fabricación artesanal bajo pedido",
+                  "Fabricación a medida disponible",
+                  "Garantía de calidad",
+                  "Envío a todo el país",
                 ].map((feature) => (
                   <div key={feature} className="flex items-center gap-2 text-muted-foreground">
                     <Check size={16} className="text-accent" />

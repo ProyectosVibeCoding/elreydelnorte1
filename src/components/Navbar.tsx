@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { CartSheet } from "./CartSheet";
 import logo from "@/assets/logo.png";
 
 const navLinks = [
@@ -87,7 +86,6 @@ export function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full" />
               </motion.button>
             ))}
-            <CartSheet />
           </div>
 
           {/* Mobile Menu Button */}

@@ -2,13 +2,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
 import { ProductCard } from "./ProductCard";
 import { products } from "@/data/products";
-import { Filter, ArrowUpDown, X } from "lucide-react";
-
-type SortOption = "default" | "price-asc" | "price-desc";
+import { Filter, X } from "lucide-react";
 
 export function CollectionSection() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<SortOption>("default");
   const [showFilters, setShowFilters] = useState(false);
 
   // Get unique categories
@@ -17,7 +14,7 @@ export function CollectionSection() {
     return cats.sort();
   }, []);
 
-  // Filter and sort products
+  // Filter products
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
@@ -26,27 +23,14 @@ export function CollectionSection() {
       result = result.filter((p) => p.category === selectedCategory);
     }
 
-    // Sort
-    switch (sortBy) {
-      case "price-asc":
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case "price-desc":
-        result.sort((a, b) => b.price - a.price);
-        break;
-      default:
-        break;
-    }
-
     return result;
-  }, [selectedCategory, sortBy]);
+  }, [selectedCategory]);
 
   const clearFilters = () => {
     setSelectedCategory(null);
-    setSortBy("default");
   };
 
-  const hasActiveFilters = selectedCategory !== null || sortBy !== "default";
+  const hasActiveFilters = selectedCategory !== null;
 
   return (
     <section id="coleccion" className="py-24 md:py-32 bg-background">
@@ -59,14 +43,14 @@ export function CollectionSection() {
           className="text-center mb-12"
         >
           <span className="font-sans text-sm tracking-[0.3em] text-accent uppercase">
-            Nuestra colección
+            Nuestro catálogo
           </span>
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mt-4">
-            Piezas Destacadas
+            Nuestros Productos
           </h2>
           <p className="font-sans text-muted-foreground max-w-2xl mx-auto mt-4">
-            Cada mueble es una obra de arte única, creada con pasión y dedicación
-            usando las mejores maderas nobles.
+            Cada mueble es fabricado con dedicación y los mejores materiales
+            para garantizar calidad y durabilidad.
           </p>
         </motion.div>
 
@@ -126,24 +110,8 @@ export function CollectionSection() {
                 ))}
               </div>
 
-              {/* Sort and count */}
+              {/* Count and clear */}
               <div className="flex items-center gap-4">
-                <div className="relative">
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as SortOption)}
-                    className="appearance-none bg-secondary text-secondary-foreground pl-10 pr-8 py-2 rounded-sm font-sans text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent"
-                  >
-                    <option value="default">Ordenar por</option>
-                    <option value="price-asc">Precio: menor a mayor</option>
-                    <option value="price-desc">Precio: mayor a menor</option>
-                  </select>
-                  <ArrowUpDown
-                    size={16}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
-                  />
-                </div>
-
                 <span className="hidden md:block text-sm text-muted-foreground">
                   {filteredProducts.length} productos
                 </span>
@@ -163,7 +131,7 @@ export function CollectionSection() {
         </motion.div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="popLayout">
             {filteredProducts.map((product, index) => (
               <motion.div
@@ -179,8 +147,6 @@ export function CollectionSection() {
                   image={product.image}
                   title={product.title}
                   category={product.category}
-                  price={product.priceFormatted}
-                  stock={product.stock}
                 />
               </motion.div>
             ))}
@@ -205,18 +171,6 @@ export function CollectionSection() {
             </button>
           </motion.div>
         )}
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16"
-        >
-          <button className="px-8 py-4 border-2 border-primary text-primary font-sans font-medium tracking-wide rounded-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300">
-            Ver toda la colección
-          </button>
-        </motion.div>
       </div>
     </section>
   );
