@@ -1,21 +1,23 @@
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Clock, MessageCircle } from "lucide-react";
 
 const contactInfo = [
+  {
+    icon: Phone,
+    title: "Llámanos",
+    content: "3512 34-6427",
+    href: "tel:+5493512346427",
+  },
+  {
+    icon: MessageCircle,
+    title: "WhatsApp",
+    content: "+54 9 3512 34-6427",
+    href: "https://wa.me/5493512346427",
+  },
   {
     icon: MapPin,
     title: "Visítanos",
     content: "Av. Hipólito Yrigoyen 456, X5000 Córdoba, Argentina",
-  },
-  {
-    icon: Phone,
-    title: "Llámanos",
-    content: "+54 351 456 7890",
-  },
-  {
-    icon: Mail,
-    title: "Escríbenos",
-    content: "info@artesaniamadera.com.ar",
   },
   {
     icon: Clock,
@@ -66,74 +68,44 @@ export function ContactSection() {
                     <h4 className="font-sans font-medium text-primary-foreground">
                       {info.title}
                     </h4>
-                    <p className="font-sans text-sm text-primary-foreground/60 mt-1">
-                      {info.content}
-                    </p>
+                    {info.href ? (
+                      <a
+                        href={info.href}
+                        target={info.href.startsWith("https") ? "_blank" : undefined}
+                        rel={info.href.startsWith("https") ? "noopener noreferrer" : undefined}
+                        className="font-sans text-sm text-primary-foreground/60 mt-1 hover:text-accent transition-colors"
+                      >
+                        {info.content}
+                      </a>
+                    ) : (
+                      <p className="font-sans text-sm text-primary-foreground/60 mt-1">
+                        {info.content}
+                      </p>
+                    )}
                   </div>
                 </motion.div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right side - Form */}
+          {/* Right side - Map */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="h-[400px] lg:h-full min-h-[400px] rounded-sm overflow-hidden"
           >
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="font-sans text-sm text-primary-foreground/80 mb-2 block">
-                    Nombre
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-sm text-primary-foreground placeholder:text-primary-foreground/40 focus:outline-none focus:border-accent transition-colors"
-                    placeholder="Tu nombre"
-                  />
-                </div>
-                <div>
-                  <label className="font-sans text-sm text-primary-foreground/80 mb-2 block">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-sm text-primary-foreground placeholder:text-primary-foreground/40 focus:outline-none focus:border-accent transition-colors"
-                    placeholder="tu@email.com"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="font-sans text-sm text-primary-foreground/80 mb-2 block">
-                  Asunto
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-sm text-primary-foreground placeholder:text-primary-foreground/40 focus:outline-none focus:border-accent transition-colors"
-                  placeholder="¿En qué podemos ayudarte?"
-                />
-              </div>
-              <div>
-                <label className="font-sans text-sm text-primary-foreground/80 mb-2 block">
-                  Mensaje
-                </label>
-                <textarea
-                  rows={5}
-                  className="w-full px-4 py-3 bg-primary-foreground/10 border border-primary-foreground/20 rounded-sm text-primary-foreground placeholder:text-primary-foreground/40 focus:outline-none focus:border-accent transition-colors resize-none"
-                  placeholder="Cuéntanos tu proyecto..."
-                />
-              </div>
-              <motion.button
-                type="submit"
-                className="w-full px-8 py-4 bg-accent text-accent-foreground font-sans font-medium tracking-wide rounded-sm hover:bg-accent/90 transition-all duration-300"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Enviar mensaje
-              </motion.button>
-            </form>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.8876!2d-64.1888!3d-31.4201!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a29f89a85a4d%3A0x80a6b2e4e0c9e1d7!2sAv.%20Hip%C3%B3lito%20Yrigoyen%20456%2C%20C%C3%B3rdoba%2C%20Argentina!5e0!3m2!1ses!2sar!4v1699999999999!5m2!1ses!2sar"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Ubicación de El Rey del Norte"
+            />
           </motion.div>
         </div>
       </div>
