@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Instagram, Facebook, ArrowUp } from "lucide-react";
+import { MessageCircle, Facebook, ArrowUp } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 export function Footer() {
@@ -25,14 +25,18 @@ export function Footer() {
 
           <div className="flex items-center gap-6">
             <motion.a
-              href="#"
+              href="https://wa.me/5493512346427"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-accent transition-colors"
               whileHover={{ scale: 1.1 }}
             >
-              <Instagram size={18} />
+              <MessageCircle size={18} />
             </motion.a>
             <motion.a
-              href="#"
+              href="https://www.facebook.com/profile.php?id=100057781384704"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-accent transition-colors"
               whileHover={{ scale: 1.1 }}
             >
