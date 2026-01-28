@@ -15,7 +15,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Escríbenos",
-    content: "info@artesaniamadera.ar",
+    content: "info@artesaniamadera.com.ar",
   },
   {
     icon: Clock,
