@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CartSheet } from "./CartSheet";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { name: "Inicio", href: "#inicio" },
@@ -60,11 +61,12 @@ export function Navbar() {
               e.preventDefault();
               scrollToSection("#inicio");
             }}
-            className="font-serif text-2xl font-bold text-primary-foreground md:text-primary"
+            className="flex items-center gap-2"
             whileHover={{ scale: 1.02 }}
           >
-            <span className={isScrolled || location.pathname !== "/" ? "text-primary" : "text-primary-foreground"}>
-              Artesanía Madera
+            <img src={logo} alt="El Rey del Norte" className="h-10 w-auto" />
+            <span className={`font-serif text-xl font-bold ${isScrolled || location.pathname !== "/" ? "text-primary" : "text-primary-foreground"}`}>
+              El Rey del Norte
             </span>
           </motion.a>
 
