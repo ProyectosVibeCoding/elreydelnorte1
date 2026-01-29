@@ -73,21 +73,6 @@ export function HeroSection() {
           Explorar Colección
         </motion.button>
 
-        {/* Scroll Indicator */}
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          onClick={scrollToCollection}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ArrowDown size={28} />
-          </motion.div>
-        </motion.button>
       </div>
     </section>
   );
