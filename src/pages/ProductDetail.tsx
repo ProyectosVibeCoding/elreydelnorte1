@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowLeft, Check, Phone, MessageCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, Check, Phone, MessageCircle, X, ZoomIn } from "lucide-react";
 import { getProductById } from "@/data/products";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
   const navigate = useNavigate();
 
   const product = getProductById(id || "");
@@ -49,16 +51,57 @@ export default function ProductDetail() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-sm bg-card"
+              className="relative overflow-hidden rounded-sm bg-card group cursor-pointer"
+              onClick={() => setIsImageExpanded(true)}
             >
               <div className="aspect-[4/5] overflow-hidden">
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
+              {/* Zoom indicator */}
+              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm p-3 rounded-full">
+                  <ZoomIn size={24} className="text-foreground" />
+                </div>
+              </div>
             </motion.div>
+
+            {/* Expanded Image Modal */}
+            <AnimatePresence>
+              {isImageExpanded && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+                  onClick={() => setIsImageExpanded(false)}
+                >
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="absolute top-6 right-6 p-2 bg-secondary hover:bg-secondary/80 rounded-full transition-colors z-10"
+                    onClick={() => setIsImageExpanded(false)}
+                  >
+                    <X size={24} className="text-foreground" />
+                  </motion.button>
+                  
+                  <motion.img
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3 }}
+                    src={product.image}
+                    alt={product.title}
+                    className="max-w-full max-h-full object-contain rounded-sm"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Product Info */}
             <motion.div
